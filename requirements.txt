@@ -1,4 +1,4 @@
-# SignalX — Root Requirements
+# SignalX Root Requirements
 # Install all dependencies: pip install -r requirements.txt
 
 # Backend
@@ -31,6 +31,13 @@ httpx>=0.25.0
 
 # Database drivers (production)
 psycopg2-binary>=2.9.9
+supabase>=2.0.0
+
+# PDF Generation & Export
+reportlab>=4.0.0
+
+# Graph Database
+neo4j>=5.0.0
 
 # Utilities
 rich>=13.0.0

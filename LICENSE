@@ -1,0 +1,53 @@
+# SignalX - Software License & Terms of Use
+
+### _Razorpay Buildthon 2026 Project Submission_
+
+**Copyright (c) 2026 aadilrizwan. All Rights Reserved.**
+
+---
+
+### 1. Purpose & Event Scope
+
+This software (**"SignalX"**) has been engineered and submitted specifically for the **Razorpay Buildthon 2026**.
+
+### 2. Hackathon Evaluation License Grant
+
+Subject to the terms and conditions of this License, permission is hereby granted, free of charge, to:
+
+- **The official judges, evaluators, mentors, and organizers of Razorpay Buildthon**;
+- **Authorized technical reviewers and staff**;
+
+to **clone, download, build, execute, run, and evaluate** this codebase and its associated assets solely for the purposes of:
+
+1. Reviewing, inspecting, and assessing the project for the Razorpay Buildthon submission and judging process.
+2. Running live demos, testing API endpoints, verifying ML scoring engines, and validating platform functionalities.
+3. Educational review within the scope of the Buildthon evaluation framework.
+
+---
+
+### 3. Strict Restrictions on Use & Cloning
+
+Except as explicitly authorized in Section 2:
+
+1. **No Unauthorized Commercial Use**: You may NOT use, deploy, host, or integrate this codebase, in whole or in part, for any commercial product, service, SaaS platform, or monetary operation without explicit written permission from the copyright owner (**MA RIZWAN**).
+2. **No Unauthorized Redistribution or Mirroring**: You may NOT redistribute, re-publish, sublicense, sell, rent, lease, or distribute copies of this repository, source code, trained model artifacts, or architecture documentation.
+3. **No Derivative Works or Plagiarism**: You may NOT claim authorship, re-brand, or submit this software or derivative works thereof as your own project or to any other competition, hackathon, or organization.
+4. **Strict Clone Policy**: Any cloning, forking, or replication outside official Razorpay Buildthon evaluation must retain all original copyright notices, contributor credits, and this complete LICENSE file intact.
+
+---
+
+### 4. Intellectual Property & Ownership
+
+All title, ownership rights, intellectual property rights, and code architectures (including but not limited to the 5-signal risk fusion engine, 31 temporal anti-leakage feature pipeline, TreeSHAP explainability modules, graph ring intelligence schemas, and UI design systems) in and to **SignalX** remain the exclusive property of **MA RIZWAN(aadilrizwan)**.
+
+---
+
+### 5. Disclaimer of Warranty & Limitation of Liability
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT, OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+---
+
+**Author / Maintainer:** MA RIZWAN(aadilrizwan)
+**Submission:** Razorpay Buildthon 2026  
+**Repository:** SignalX - AI-Powered Merchant Risk Intelligence Platform
