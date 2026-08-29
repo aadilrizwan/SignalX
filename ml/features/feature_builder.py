@@ -2,7 +2,7 @@
 SignalX — Feature Engineering Pipeline
 
 Builds 31 features for fraud detection from transaction data.
-All features are computed with strict temporal safety — no future data leakage.
+All features are computed with strict temporal safety no future data leakage.
 
 Feature Categories:
 - Transaction (6): amount, hour, day_of_week, is_weekend, payment_method, billing_country
@@ -30,7 +30,7 @@ PAYMENT_METHOD_MAP = {
     "buy_now_pay_later": 4,
 }
 
-# Top countries encoding (others → 99)
+# Top countries encoding 
 COUNTRY_MAP = {
     "US": 0, "UK": 1, "CA": 2, "IN": 3, "DE": 4,
     "FR": 5, "AU": 6, "BR": 7, "JP": 8, "NG": 9,
@@ -312,9 +312,9 @@ def _build_velocity_features(df: pd.DataFrame) -> pd.DataFrame:
 
 def _build_device_features(df: pd.DataFrame, devices_df: pd.DataFrame) -> pd.DataFrame:
     """
-    Build device-level risk features.
+    Build device level risk features.
 
-    Uses point-in-time device stats computed from transactions before current.
+    Uses point in time device stats computed from transactions before current.
     """
     # Pre-compute device stats from the full transaction set (excluding current row via shift logic)
     device_stats = df.groupby("device_id").agg(
@@ -450,7 +450,7 @@ def build_single_transaction_features(
     """
     Build features for a SINGLE real-time transaction API request.
 
-    Computes point-in-time historical features from historical DataFrames.
+    Computes point in time historical features from historical DataFrames.
 
     Args:
         transaction: Dict containing transaction fields.
