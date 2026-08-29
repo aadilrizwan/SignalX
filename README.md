@@ -1,4 +1,4 @@
-# SignalX - AI-Powered Merchant Risk Intelligence Platform
+# SignalX - AI Powered Merchant Risk Intelligence Platform
 
 > **Built for Razorpay Buildthon** A production grade, real time fraud detection and merchant financial loss prevention platform.
 
