@@ -251,3 +251,10 @@ export async function uploadEvidenceDossier(
     return { url: null, error: err };
   }
 }
+
+export function getEvidenceDossierPublicUrl(fileName: string): string {
+  const cleanPath = fileName.startsWith("dossiers/") ? fileName : `dossiers/${fileName}`;
+  const { data } = supabase.storage.from("evidence-dossiers").getPublicUrl(cleanPath);
+  return data.publicUrl;
+}
+
