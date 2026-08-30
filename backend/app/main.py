@@ -32,16 +32,43 @@ from backend.app.api.routes_webhooks import router as webhooks_router
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    """Application lifespan: load models on startup, cleanup on shutdown."""
+    """Application lifespan: auto-bootstrap dataset and ML models, cleanup on shutdown."""
     settings = get_settings()
     print("=" * 50)
     print("  SignalX — Starting up...")
     print("=" * 50)
 
-    # Create data directory
+    # 1. Ensure data directory and seed datasets exist
     os.makedirs(settings.data_dir, exist_ok=True)
+    txn_path = os.path.join(settings.data_dir, "transactions.csv")
+    if not os.path.exists(txn_path) or os.path.getsize(txn_path) < 100:
+        try:
+            print("  ⚡ Auto-bootstrapping synthetic merchant datasets...")
+            from synthetic_data.generator import generate_all
+            generate_all(
+                n_customers=2000,
+                n_transactions=10000,
+                n_devices=1000,
+                n_ips=1500,
+                output_dir=settings.data_dir,
+                seed=42,
+            )
+            print("  ✓ Synthetic datasets bootstrapped")
+        except Exception as e:
+            print(f"  ⚠ Dataset bootstrap: {e}")
 
-    # Create database tables
+    # 2. Ensure ML models exist
+    model_path = settings.ml_model_path
+    if not os.path.exists(model_path):
+        try:
+            print("  ⚡ Auto-training ML models on startup...")
+            from ml.training.train_model import train_models
+            train_models(data_dir=settings.data_dir, model_dir="ml/models")
+            print("  ✓ ML models trained and saved")
+        except Exception as e:
+            print(f"  ⚠ Model training bootstrap: {e}")
+
+    # 3. Create database tables
     try:
         from backend.app.database import create_tables
         create_tables()
@@ -49,7 +76,7 @@ async def lifespan(app: FastAPI):
     except Exception as e:
         print(f"  ⚠ Database setup: {e}")
 
-    # Pre-warm risk service (loads ML models)
+    # 4. Pre-warm risk service (loads ML models)
     try:
         from backend.app.api.routes_risk import get_risk_service
         service = get_risk_service()
@@ -57,7 +84,23 @@ async def lifespan(app: FastAPI):
     except Exception as e:
         print(f"  ⚠ Risk engine: {e}")
 
-    # Pre-warm velocity engine (Redis / In-memory)
+    # 5. Pre-warm data services
+    try:
+        from backend.app.api.routes_transactions import get_txn_service
+        from backend.app.services.returns_service import get_returns_service
+        from backend.app.services.chargebacks_service import get_chargebacks_service
+        from backend.app.services.reviews_service import get_reviews_service
+        from backend.app.services.evidence_service import get_evidence_service
+        get_txn_service()
+        get_returns_service()
+        get_chargebacks_service()
+        get_reviews_service()
+        get_evidence_service()
+        print("  ✓ Merchant data services loaded in memory")
+    except Exception as e:
+        print(f"  ⚠ Data services: {e}")
+
+    # 6. Pre-warm velocity engine (Redis / In-memory)
     try:
         from backend.app.risk_engine.velocity_tracker import get_velocity_tracker
         tracker = get_velocity_tracker()
@@ -66,7 +109,7 @@ async def lifespan(app: FastAPI):
     except Exception as e:
         print(f"  ⚠ Velocity engine: {e}")
 
-    # Pre-warm Supabase service
+    # 7. Pre-warm Supabase service
     try:
         from backend.app.services.supabase_service import get_supabase_service
         sb = get_supabase_service()
@@ -81,6 +124,7 @@ async def lifespan(app: FastAPI):
     yield  # Application runs
 
     print("  SignalX — Shutting down...")
+
 
 
 # Create FastAPI app
