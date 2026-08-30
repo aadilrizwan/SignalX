@@ -221,7 +221,7 @@ export default function LoginPage() {
                       color: "var(--text-tertiary)",
                     }}
                   >
-                    Senior Fraud Investigator (Analyst Role)
+                    Fraud Investigator (Analyst Role)
                   </div>
                 </div>
               </div>
