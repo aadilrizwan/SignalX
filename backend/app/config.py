@@ -6,7 +6,7 @@ for local development. In production, set these via your deployment platform.
 """
 
 from pydantic_settings import BaseSettings
-from pydantic import Field
+from pydantic import Field, field_validator
 from typing import Optional
 import os
 
@@ -80,9 +80,40 @@ class Settings(BaseSettings):
 
     model_config = {"env_file": ".env", "env_file_encoding": "utf-8", "extra": "ignore"}
 
+    @field_validator("database_url", mode="before")
+    @classmethod
+    def sanitize_database_url(cls, v):
+        if not v or not isinstance(v, str) or not v.strip():
+            return "sqlite:///./data/SignalX.db"
+        v_clean = v.strip()
+        # Convert deprecated postgres:// to postgresql+psycopg2:// or postgresql://
+        if v_clean.startswith("postgres://"):
+            v_clean = v_clean.replace("postgres://", "postgresql+psycopg2://", 1)
+        elif v_clean.startswith("postgresql://") and not v_clean.startswith("postgresql+"):
+            v_clean = v_clean.replace("postgresql://", "postgresql+psycopg2://", 1)
+        return v_clean
+
+    @field_validator(
+        "supabase_url", "supabase_publishable_key", "supabase_anon_key",
+        "supabase_service_role_key", "redis_url", "neo4j_uri", "neo4j_user",
+        "neo4j_username", "neo4j_password", "neo4j_database", "llm_api_key",
+        "deepseek_api_key", "gemini_api_key", mode="before"
+    )
+    @classmethod
+    def sanitize_optional_strings(cls, v):
+        if v is None:
+            return None
+        if isinstance(v, str) and not v.strip():
+            return None
+        return v
+
     @property
     def cors_origins_list(self) -> list[str]:
-        return [origin.strip() for origin in self.cors_origins.split(",")]
+        origins = [origin.strip() for origin in self.cors_origins.split(",") if origin.strip()]
+        for default_origin in ["http://localhost:3000", "http://localhost:8000"]:
+            if default_origin not in origins:
+                origins.append(default_origin)
+        return origins
 
 
 # Singleton settings instance
@@ -95,3 +126,4 @@ def get_settings() -> Settings:
     if _settings is None:
         _settings = Settings()
     return _settings
+

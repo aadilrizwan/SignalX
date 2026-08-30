@@ -5,7 +5,8 @@ FROM python:3.11-slim as base
 # Prevent Python from writing .pyc files and buffer stdout/stderr
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
-    PORT=8000
+    PORT=8000 \
+    DATABASE_URL="sqlite:///./data/SignalX.db"
 
 WORKDIR /app
 
@@ -21,10 +22,10 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt
 
-# Copy backend application code and ML model artifacts
+# Copy backend application code, ML model artifacts, and datasets
 COPY backend ./backend
 COPY ml ./ml
-COPY .env.example .env
+COPY data ./data
 
 # Create data and logs directories
 RUN mkdir -p /app/data /app/logs
@@ -38,3 +39,4 @@ HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
 
 # Start FastAPI with Uvicorn
 CMD ["sh", "-c", "uvicorn backend.app.main:app --host 0.0.0.0 --port ${PORT}"]
+

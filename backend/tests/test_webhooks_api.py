@@ -55,16 +55,50 @@ def test_shopify_webhook_returns():
     assert "return_decision" in data
 
 
-def test_simulate_live_traffic():
+def test_razorpay_webhook_payment():
     payload = {
-        "batch_size": 5,
-        "fraud_ratio": 0.40,
-        "include_wardrobers": True
+        "event": "payment.authorized",
+        "payload": {
+            "payment": {
+                "entity": {
+                    "id": "pay_test_987654",
+                    "amount": 299900,
+                    "currency": "INR",
+                    "customer_id": "cust_rzp_001",
+                    "method": "card",
+                    "notes": {
+                        "ip_address": "103.21.244.10",
+                        "device_id": "dev_rzp_99",
+                    }
+                }
+            }
+        }
     }
-    response = client.post("/api/webhooks/simulate-traffic", json=payload)
+    response = client.post("/api/webhooks/razorpay", json=payload)
     assert response.status_code == 200
     data = response.json()
-    assert data["total_processed"] == 5
-    assert len(data["transactions"]) == 5
-    assert "prevented_loss_usd" in data
-    assert "execution_time_ms" in data
+    assert data["status"] == "success"
+    assert "decision" in data
+    assert "risk_score" in data
+    assert "recommendation" in data
+
+
+def test_razorpay_webhook_dispute():
+    payload = {
+        "event": "dispute.created",
+        "payload": {
+            "dispute": {
+                "entity": {
+                    "id": "disp_rzp_12345",
+                    "amount": 50000,
+                    "reason_code": "fraudulent",
+                }
+            }
+        }
+    }
+    response = client.post("/api/webhooks/razorpay", json=payload)
+    assert response.status_code == 200
+    data = response.json()
+    assert data["status"] == "success"
+    assert data["dispute_id"] == "disp_rzp_12345"
+

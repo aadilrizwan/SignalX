@@ -11,12 +11,12 @@ services:
     envVars:
       - key: PORT
         value: 8000
+      - key: DATABASE_URL
+        value: sqlite:///./data/SignalX.db
       - key: LLM_PROVIDER
         value: deepseek
       - key: SUPABASE_STORAGE_BUCKET
         value: evidence-dossiers
-      - key: REDIS_URL
-        value: "" # Zero cost in memory velocity tracking
       - key: SUPABASE_URL
         sync: false
       - key: SUPABASE_PUBLISHABLE_KEY
@@ -32,4 +32,5 @@ services:
       - key: NEO4J_PASSWORD
         sync: false
       - key: CORS_ORIGINS
-        value: "https://*.vercel.app,http://localhost:3000"
+        value: "https://*.vercel.app,https://*.onrender.com,http://localhost:3000,http://localhost:8000"
+
