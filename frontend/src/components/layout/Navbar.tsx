@@ -16,7 +16,7 @@ export function Navbar() {
             <ShieldCheck size={20} />
           </div>
           <span className="navbar-title">SignalX</span>
-          <span className="navbar-badge">ENTERPRISE</span>
+          <span className="navbar-badge hide-on-mobile">ENTERPRISE</span>
         </Link>
 
         {/* Desktop Links */}
@@ -40,14 +40,14 @@ export function Navbar() {
 
         {/* Action CTAs */}
         <div className="navbar-actions">
-          <div className="status-indicator">
+          <div className="status-indicator hide-on-mobile">
             <span className="status-dot" />
             <span>API Operational</span>
           </div>
 
           <Link
             href="/login"
-            className="btn btn-secondary btn-sm"
+            className="btn btn-secondary btn-sm nav-cta-secondary"
             style={{
               padding: "0.4rem 0.75rem",
               fontSize: "0.8125rem",
@@ -57,8 +57,10 @@ export function Navbar() {
             Sign In / Demo
           </Link>
 
-          <Link href="/dashboard" className="btn btn-primary btn-sm">
-            Launch Dashboard <ArrowRight size={15} />
+          <Link href="/dashboard" className="btn btn-primary btn-sm nav-cta-primary">
+            <span className="nav-cta-text-full">Launch Dashboard</span>
+            <span className="nav-cta-text-short">Dashboard</span>
+            <ArrowRight size={14} />
           </Link>
 
           {/* Mobile Hamburger Toggle */}
@@ -76,48 +78,60 @@ export function Navbar() {
       <div className={`mobile-nav-drawer ${mobileMenuOpen ? "open" : ""}`}>
         <a
           href="#features"
-          className="nav-link"
+          className="mobile-drawer-link"
           onClick={() => setMobileMenuOpen(false)}
         >
           Platform Features
         </a>
         <a
           href="#live-sandbox"
-          className="nav-link"
+          className="mobile-drawer-link"
           onClick={() => setMobileMenuOpen(false)}
         >
-          Live Sandbox
+          Live Scoring Sandbox
         </a>
         <a
           href="#architecture"
-          className="nav-link"
+          className="mobile-drawer-link"
           onClick={() => setMobileMenuOpen(false)}
         >
           Engine Architecture
         </a>
         <Link
           href="/model"
-          className="nav-link"
+          className="mobile-drawer-link"
           onClick={() => setMobileMenuOpen(false)}
         >
-          Model Metrics
+          Model Performance & Metrics
         </Link>
         <Link
           href="/settings"
-          className="nav-link"
+          className="mobile-drawer-link"
           onClick={() => setMobileMenuOpen(false)}
         >
-          Settings
+          Risk Engine & Thresholds
         </Link>
-        <Link
-          href="/dashboard"
-          className="btn btn-primary"
-          style={{ width: "100%", marginTop: "0.5rem" }}
-          onClick={() => setMobileMenuOpen(false)}
-        >
-          Launch Merchant Dashboard <ArrowRight size={16} />
-        </Link>
+
+        <div className="mobile-drawer-actions">
+          <Link
+            href="/login"
+            className="btn btn-secondary"
+            style={{ width: "100%", justifyContent: "center", padding: "0.6rem" }}
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            Sign In / 1-Click Demo Access
+          </Link>
+          <Link
+            href="/dashboard"
+            className="btn btn-primary"
+            style={{ width: "100%", justifyContent: "center", padding: "0.6rem" }}
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            Launch Merchant Dashboard <ArrowRight size={16} />
+          </Link>
+        </div>
       </div>
     </header>
   );
 }
+
