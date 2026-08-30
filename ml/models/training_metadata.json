@@ -1,0 +1,19 @@
+{
+  "training_time_seconds": 9.2,
+  "train_size": 35839,
+  "val_size": 9111,
+  "test_size": 8796,
+  "n_features": 31,
+  "fraud_rate_train": 0.04497893356399453,
+  "fraud_rate_val": 0.049281088793765776,
+  "fraud_rate_test": 0.04456571168713051,
+  "scale_pos_weight": 21.232630272952854,
+  "lgbm_best_iteration": 1,
+  "model_paths": {
+    "lightgbm": "ml\\models\\lightgbm_fraud.pkl",
+    "logistic_regression": "ml\\models\\logistic_regression.pkl",
+    "scaler": "ml\\models\\scaler.pkl",
+    "isolation_forest": "ml\\models\\isolation_forest.pkl",
+    "feature_columns": "ml\\models\\feature_columns.json"
+  }
+}

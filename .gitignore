@@ -12,20 +12,20 @@ venv/
 .venv/
 env/
 
-# ML artifacts
-ml/models/*.pkl
-ml/models/*.joblib
-ml/models/*.json
+# ML artifacts (Track trained models and metrics for deployment)
+!ml/models/*.pkl
+!ml/models/*.json
 !ml/models/.gitkeep
 
-# Data
-data/*.csv
+# Data (Track demo CSV datasets for deployment)
+!data/*.csv
 data/*.db
 data/*.sqlite
 data/*.db-shm
 data/*.db-wal
 data/*.db-journal
 !data/.gitkeep
+
 
 # Environment
 .env
